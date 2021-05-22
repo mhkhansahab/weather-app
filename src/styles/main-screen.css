@@ -1,0 +1,26 @@
+.main-screen{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+.weather-title{
+    margin-top: 20%;
+    font-size: 40px;
+}
+.my-input{
+    margin-top: 50%;
+    width: 250px;
+    height: 30px;
+    border-radius: 20px;
+    border: 1px solid lightgray;
+    padding: 5px 15px;
+}
+.my-input:focus{
+    outline: none;
+}
+.error{
+    color: red;
+    font-size: 12px;
+    margin: 10px;
+}

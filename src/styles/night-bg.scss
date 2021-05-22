@@ -1,0 +1,61 @@
+.contain-page {
+	height: 100vh; // SIZE CONTAINER FOR CENTERING
+	width: 100%;  // SIZE CONTAINER FOR CENTERING
+	background: black;
+}
+#contain-all-moon {
+	position: fixed;
+	display: inline-block;
+	overflow: hidden;
+	background: rgb(36, 36, 36);
+	border-radius: 50%;
+	width: 600px; // SIZE
+	left: 50%; margin-left: -300px; // POSITION VERTICALLY
+	top: 56%; margin-top: -300px; // POSITION HORIZONTALLY
+	padding: 0;
+	box-sizing: border-box;
+	box-shadow: inset 0 -10px black; // for inconsistency in SVG bottom has gap
+	svg {
+		transform-origin: 50% 50%;
+		box-sizing: border-box;
+	}
+	#moon-group {
+		@keyframes hover {
+			50% {transform: translatey(-1%)}
+		}
+		#moon {
+			fill: url(#_rgradient_0);
+			animation: hover 2000ms 500ms ease-in-out infinite;
+		}
+		#aura-group {
+			@keyframes pulse {
+				50% {transform: scale(1.05)}
+			}
+			@for $i from 1 through 3 {
+				#aura-#{$i} {
+					transform-origin: 50% 50%;
+					animation: pulse 3000ms 750ms * $i ease-in-out infinite;
+				}
+			}
+		}
+		#crater-group {
+			@for $i from 1 through 4 {
+				#crater-#{$i} {
+					transform-origin: 50% 50%;
+					animation: hover 2000ms 500ms ease-in-out infinite;
+				}
+			}
+		}
+	}
+	#mountain-group {
+		@keyframes jam {
+			30% {transform: translatex(2%) translatey(2%)}
+			60% {transform: translatex(-2%) translatey(2%)}
+		}
+		@for $i from 1 through 4 {
+			#mountain-#{$i} {
+				animation: jam 2500ms 625ms * $i ease-in-out alternate infinite;
+			}
+		}
+	}
+}
