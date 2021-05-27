@@ -6,6 +6,7 @@ import Card from "./components/card";
 import NightBackground from "./components/night-bg";
 import DayBackground from "./components/day-bg";
 import MainScreen from "./components/main-screen";
+import Swal from 'sweetalert2'
 
 function App() {
 
@@ -32,7 +33,7 @@ function App() {
   };
 
   const nameHandler=(e)=>{
-    const regExp = /^[a-zA-Z]+$/;
+    const regExp = /^[a-zA-Z ]+$/;
 
     const data = {...cityData, city : e.target.value};
 
@@ -51,7 +52,7 @@ function App() {
     const error = wholeState.regError;
 
     if(error !== "" || city === ""){
-      console.log("there is some error");
+      Swal.fire('Write Something...')
     }else{
         setshowSpinner(true);
         const data = await getData(city);
@@ -63,7 +64,11 @@ function App() {
          setCityData(wholeState);
        }else{
           setshowSpinner(false);
-         alert("errrr")
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          })
        }
     }
   }
@@ -77,15 +82,19 @@ function App() {
     }
   }
 
-  const dateExtracter = (datetime)=>{
-    const date = new Date(datetime * 1000);
-    return date.toDateString();
-  }
-  const timeExtracter=(datetime)=>{
-    const time = new Date(datetime * 1000);
-    return time.toLocaleTimeString();
-  }
+  const dateExtracter = (offset) => {
+    const date = new Date();
+    const utc = date.getTime() + (date.getTimezoneOffset() * 60000);
+    const desiredDate = new Date(utc + (3600000*offset/3600));
+    return desiredDate.toDateString();
+}
 
+  const timeExtracter = (offset) => {
+    const date = new Date();
+    const utc = date.getTime() + (date.getTimezoneOffset() * 60000);
+    const desiredDate = new Date(utc + (3600000*offset/3600));
+    return desiredDate.toLocaleTimeString();
+}
   const backToHome = ()=>{
     const tempState = {...cityData};
     tempState.data = null;
@@ -98,7 +107,7 @@ function App() {
 
   return (
     <div className="App">
-
+      
     {cityData.data 
       ?
       (
@@ -108,21 +117,21 @@ function App() {
           <Navbar back={backToHome}></Navbar>
           <Card 
             data={cityData.data} 
-            time={timeExtracter(cityData.data.dt)}
-            date={dateExtracter(cityData.data.dt)}></Card>
+            time={timeExtracter(cityData.data.timezone)}
+            date={dateExtracter(cityData.data.timezone)}></Card>
         </DayBackground> 
         :
         <NightBackground>
           <Navbar back={backToHome}></Navbar>
           <Card 
             data={cityData.data} 
-            time={timeExtracter(cityData.data.dt)}
-            date={dateExtracter(cityData.data.dt)}></Card>  
+            time={timeExtracter(cityData.data.timezone)}
+            date={dateExtracter(cityData.data.timezone)}></Card>  
         </NightBackground>
       )
         :
         <MainScreen
-         nameHandler={debounce((e)=>nameHandler(e),500)} 
+         nameHandler={debounce((e)=>nameHandler(e),300)} 
          errorMsg={cityData.regError}
          getForecast = {getForecast}
          showSpinner = {showSpinner}>

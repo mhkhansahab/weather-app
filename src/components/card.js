@@ -1,4 +1,5 @@
 import "./../styles/card.css";
+import CountUp from 'react-countup';
 
 const card = (props)=>{
     return(
@@ -8,7 +9,7 @@ const card = (props)=>{
                 <div>{props.time}</div>
                 <div>{props.date}</div>
             </div>
-            <div className="temparature">{props.data.main.temp}&deg; C</div>
+            <div className="temparature"><CountUp className="count" start={0} end={props.data.main.temp} duration={2} delay={0.5}/> &deg;C</div>
             <div style={{"textAlign": "center"}}>{props.data.weather[0].main}</div>
             <div className="bottom-tiles">
                 <div className="tile">Feels Like : {props.data.main.feels_like}&deg; C</div>
