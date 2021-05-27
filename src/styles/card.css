@@ -4,7 +4,7 @@
     width: 80%;
     height: 70vh;
     margin-top: 60px;
-    color: white;
+    color: #3d405b;
     overflow: hidden;
     z-index: 10;
     background: rgba( 255, 255, 255, 0.25 );
@@ -34,4 +34,10 @@
 .tile{
     text-align: center;
     padding: 10px 0;
+}
+.temparature{
+    margin-top: 100px;
+    text-align: center;
+    font-size: 70px;
+    font-family: Robinson-Outline
 }

@@ -1,5 +1,5 @@
 import getData from "./axios/axios-call";
-import { useEffect , useState } from "react";
+import { useState } from "react";
 import './App.css';
 import Navbar from "./components/nav";
 import Card from "./components/card";
@@ -10,17 +10,12 @@ import MainScreen from "./components/main-screen";
 function App() {
 
   const [cityData, setCityData] = useState({
-    city : null,
+    city : "",
     data: null,
     regError: "",
   })
 
-  useEffect(() => {
-    console.log(cityData);
-  }, [cityData])
-  // useEffect(() => {
-  //   getData("karachi");
-  // }, [])
+  const [showSpinner, setshowSpinner] = useState(false)
 
   const debounce = (func, wait) => {
     let timeout;
@@ -50,19 +45,89 @@ function App() {
     setCityData(data)
   }
   
+  const getForecast = async ()=> {
+    const wholeState = {...cityData}
+    const city = wholeState.city.trim();
+    const error = wholeState.regError;
+
+    if(error !== "" || city === ""){
+      console.log("there is some error");
+    }else{
+        setshowSpinner(true);
+        const data = await getData(city);
+       if(data !== "error"){
+          wholeState.data = data;
+          wholeState.city = city;
+          wholeState.regError = "";
+
+         setCityData(wholeState);
+       }else{
+          setshowSpinner(false);
+         alert("errrr")
+       }
+    }
+  }
+
+  const isDay = (datetime)=>{
+    const hours = new Date(datetime * 1000).getHours();
+    if(hours >= 6 && hours <= 18){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  const dateExtracter = (datetime)=>{
+    const date = new Date(datetime * 1000);
+    return date.toDateString();
+  }
+  const timeExtracter=(datetime)=>{
+    const time = new Date(datetime * 1000);
+    return time.toLocaleTimeString();
+  }
+
+  const backToHome = ()=>{
+    const tempState = {...cityData};
+    tempState.data = null;
+    tempState.city = "";
+    tempState.regError = "";
+
+    setCityData(tempState);
+    setshowSpinner(false);
+  }
+
   return (
     <div className="App">
-      {console.log("render....")}
-      {/* <MainScreen nameHandler={debounce((e)=>nameHandler(e),500)} errorMsg={cityData.regError}></MainScreen> */}
-      {/* <NightBackground>
-        <Navbar></Navbar>
-        <Card></Card>
-      </NightBackground>
-      */}
-     <DayBackground>
-        <Navbar></Navbar>
-        <Card></Card>
-     </DayBackground>
+
+    {cityData.data 
+      ?
+      (
+      isDay(cityData.data.dt) 
+      ? 
+        <DayBackground>
+          <Navbar back={backToHome}></Navbar>
+          <Card 
+            data={cityData.data} 
+            time={timeExtracter(cityData.data.dt)}
+            date={dateExtracter(cityData.data.dt)}></Card>
+        </DayBackground> 
+        :
+        <NightBackground>
+          <Navbar back={backToHome}></Navbar>
+          <Card 
+            data={cityData.data} 
+            time={timeExtracter(cityData.data.dt)}
+            date={dateExtracter(cityData.data.dt)}></Card>  
+        </NightBackground>
+      )
+        :
+        <MainScreen
+         nameHandler={debounce((e)=>nameHandler(e),500)} 
+         errorMsg={cityData.regError}
+         getForecast = {getForecast}
+         showSpinner = {showSpinner}>
+         </MainScreen>
+      }
       
     </div>
   );

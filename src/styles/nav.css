@@ -13,3 +13,11 @@
     font-size: 16px;
     color: white;
 }
+.back-icon{
+    position: absolute;
+    left: 30px;
+    cursor: pointer;
+}
+.back-icon > i{
+    font-size: 20px;
+}

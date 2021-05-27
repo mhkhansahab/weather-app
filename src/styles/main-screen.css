@@ -1,20 +1,24 @@
 .main-screen{
+    position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
     height: 100vh;
 }
 .weather-title{
-    margin-top: 20%;
+    color: #3d405b;
+    top: 20%;
+    position: absolute;
     font-size: 40px;
 }
 .my-input{
-    margin-top: 50%;
     width: 250px;
     height: 30px;
     border-radius: 20px;
     border: 1px solid lightgray;
     padding: 5px 15px;
+    color: #3d405b;
 }
 .my-input:focus{
     outline: none;
@@ -24,3 +28,35 @@
     font-size: 12px;
     margin: 10px;
 }
+.input-container{
+    height: 50px;
+}
+.btn-container{
+    margin-top: 20px;
+}
+.btn-container > button{
+    background-color: white;
+    border: 1px solid lightgray;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #3d405b;
+    cursor: pointer;
+}
+
+.btn-container > button:hover{
+    border: 1px solid darkgray;
+}
+
+.loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

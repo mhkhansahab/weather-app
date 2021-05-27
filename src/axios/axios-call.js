@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const getData = (name)=>{
+const getData = async (name)=>{
     const options = {
         method: 'GET',
         url: 'https://community-open-weather-map.p.rapidapi.com/weather',
@@ -8,7 +8,6 @@ const getData = (name)=>{
           q: name,
           lat: '0',
           lon: '0',
-          callback: 'test',
           id: '2172797',
           lang: 'null',
           units: "metric",
@@ -20,11 +19,13 @@ const getData = (name)=>{
         }
       };
       
-      axios.request(options).then(function (response) {
-          console.log(response.data);
-      }).catch(function (error) {
-          console.error(error);
-      });
+      try{
+        const response = await axios.request(options)
+        return response.data;
+      }catch{
+        return "error";
+      }
+      
 }
 
 export default getData;
