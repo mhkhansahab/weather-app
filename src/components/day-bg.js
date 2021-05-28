@@ -9,7 +9,7 @@ const daybg = (props) => {
           x="0px"
           y="0px"
           viewBox="0 0 50 50"
-          style={{ "enable-background": "new 0 0 50 50" }}
+          style={{ "enableBackground": "new 0 0 50 50" }}
         >
           <circle id="sunBeam" r="20" cy="25" cx="25">
             <animate

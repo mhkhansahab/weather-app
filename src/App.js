@@ -72,9 +72,17 @@ function App() {
        }
     }
   }
+  
+  const desiredDate = (offset)=>{
+    const date = new Date();
+    const utc = date.getTime() + (date.getTimezoneOffset() * 60000);
+    const desiredDate = new Date(utc + (3600000*offset/3600));
+    return desiredDate;
+  }
 
-  const isDay = (datetime)=>{
-    const hours = new Date(datetime * 1000).getHours();
+  const isDay = (offset)=>{
+    const cityDate = desiredDate(offset);
+    const hours = cityDate.getHours();
     if(hours >= 6 && hours <= 18){
       return true;
     }else{
@@ -83,17 +91,13 @@ function App() {
   }
 
   const dateExtracter = (offset) => {
-    const date = new Date();
-    const utc = date.getTime() + (date.getTimezoneOffset() * 60000);
-    const desiredDate = new Date(utc + (3600000*offset/3600));
-    return desiredDate.toDateString();
+    const cityDate = desiredDate(offset);
+    return cityDate.toDateString();
 }
 
   const timeExtracter = (offset) => {
-    const date = new Date();
-    const utc = date.getTime() + (date.getTimezoneOffset() * 60000);
-    const desiredDate = new Date(utc + (3600000*offset/3600));
-    return desiredDate.toLocaleTimeString();
+    const cityDate = desiredDate(offset);
+    return cityDate.toLocaleTimeString();
 }
   const backToHome = ()=>{
     const tempState = {...cityData};
@@ -111,7 +115,7 @@ function App() {
     {cityData.data 
       ?
       (
-      isDay(cityData.data.dt) 
+      isDay(cityData.data.timezone) 
       ? 
         <DayBackground>
           <Navbar back={backToHome}></Navbar>
