@@ -1,7 +1,55 @@
 import "./../styles/card.css";
 import CountUp from 'react-countup';
+import React from "react";
 
-const card = (props)=>{
+// const clock = (props,time)=>{
+//     const propsData = props.time;
+//     if(propsData){
+//     const tempTime = {...time};
+//     const meridium = propsData.split(" ")[1];
+//     const splittedTime = (propsData.split(" ")[0]).split(":");
+//     var intTime = splittedTime.map((element)=>{
+//         return parseInt(element);
+//     })
+
+//     intTime[2] = intTime[2]++;
+//     if(intTime[2] >= 60){
+//         intTime[1] = intTime[1]++;
+//         if(intTime[1] >= 60){
+//             intTime[0] = intTime[0]++;
+//         }
+//     }
+    
+//     tempTime.hour = intTime[0];
+//     tempTime.sec = intTime[1];
+//     tempTime.min = intTime[2];
+//     tempTime.meridium = meridium;
+
+//     return tempTime;
+//     }
+    
+// }
+
+const Card = (props)=>{
+
+    // const [time, setTime] = useState({
+    //         hour : 0,
+    //         min : 0,
+    //         sec: 0,
+    //         meridium : "AM"
+    // })
+
+    // const obj = clock(props, time);
+    // setTime(obj);
+
+    // {
+    //     time.hour.toString() +" : "+ 
+    //     time.min.toString() + " : " + 
+    //     time.sec.toString() +" "+
+    //     time.meridium
+    // }
+
+
     return(
         <div className = "card">
             <div className="card-content">
@@ -20,4 +68,4 @@ const card = (props)=>{
     );
 }
 
-export default card;
+export default React.memo(Card);
